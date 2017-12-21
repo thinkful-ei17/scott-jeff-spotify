@@ -37,15 +37,33 @@ const getArtist = function (name) {
   return getFromApi('search', queryObj)
     .then(item => {
       artist = item.artists.items[0];
+      console.log('artist.id =', artist.id);
+      // console.log(getFromApi(`artists/${artist.id}/related-artists`));
+      return getFromApi(`artists/${artist.id}/related-artists`);
+    })
+    .then(item =>{
+      console.log('item is: ', item);
+      artist.related = item.artists;
       return artist;
-    }).catch(function(err){
+    })
+    .catch(function(err){
       console.log('This went wrong:', err);
     });
-
+  // artists / { id } / related - artists
   // Edit me!
   // (Plan to call `getFromApi()` several times over the whole exercise from here!)
 };
 
+
+// Update your getArtists method to also fetch a list of artists related to the one you are searching for.
+
+// Instead of returning the artist object from your getFromApi callback, return a request to the get related artists endpoint.
+// It should use the artist ID from the artist object.
+// Chain another then call to handle the response from your second request.
+// Inside the callback you should:
+// Set artist.related to item.artists, where item is the object returned by the get related artists endpoint.
+// Return the artist object.
+// Try searching for an artist again.You should now see a list of related artists also being displayed.
 
 
 
