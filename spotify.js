@@ -45,16 +45,20 @@ const getArtist = function (name) {
       console.log('item is: ', item);
       console.log('related artists are: ', item.artists);
       artist.related = item.artists;
-      const relatedArtists = item.artists.map(function(artist) {
+      const relatedArtistTracks = item.artists.map(function(artist) {
         return getFromApi(`artists/${artist.id}/top-tracks/?country=US`);
       });
-      console.log('You promise calls are:', relatedArtists);
-      return Promise.all([relatedArtists]);
+      console.log('You promise calls are:', relatedArtistTracks);
+      return Promise.all(relatedArtistTracks);
       // return artist;
     })
-    .then()
-
-
+    .then(responses => {
+      console.log('responses are', responses);
+      for (let i=0; i < responses.length; i++){
+        artist.related[i].tracks = responses[i].tracks;
+      }
+      return artist;
+    })
     .catch(function(err){
       console.log('This went wrong:', err);
     });
