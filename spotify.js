@@ -43,9 +43,18 @@ const getArtist = function (name) {
     })
     .then(item =>{
       console.log('item is: ', item);
+      console.log('related artists are: ', item.artists);
       artist.related = item.artists;
-      return artist;
+      const relatedArtists = item.artists.map(function(artist) {
+        return getFromApi(`artists/${artist.id}/top-tracks/?country=US`);
+      });
+      console.log('You promise calls are:', relatedArtists);
+      return Promise.all([relatedArtists]);
+      // return artist;
     })
+    .then()
+
+
     .catch(function(err){
       console.log('This went wrong:', err);
     });
@@ -53,6 +62,9 @@ const getArtist = function (name) {
   // Edit me!
   // (Plan to call `getFromApi()` several times over the whole exercise from here!)
 };
+
+
+
 
 
 // Update your getArtists method to also fetch a list of artists related to the one you are searching for.
