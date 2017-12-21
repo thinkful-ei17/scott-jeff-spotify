@@ -1,3 +1,5 @@
+'use strict';
+
 const CLIENT_ID = 'eb6dfffda5534bb5996e872487be4321';
 
 const getFromApi = function (endpoint, query = {}) {
@@ -24,10 +26,25 @@ const getFromApi = function (endpoint, query = {}) {
 
 let artist;
 
+
 const getArtist = function (name) {
+  const queryObj = {
+    q: name,
+    limit: 1,
+    type: 'artist',
+  };
+
+  return getFromApi('search', queryObj)
+    .then(item => {
+      artist = item.artists.items[0];
+      return artist;
+    });
+
   // Edit me!
   // (Plan to call `getFromApi()` several times over the whole exercise from here!)
 };
+
+
 
 
 
