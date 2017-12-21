@@ -38,6 +38,8 @@ const getArtist = function (name) {
     .then(item => {
       artist = item.artists.items[0];
       return artist;
+    }).catch(function(err){
+      console.log('This went wrong:', err);
     });
 
   // Edit me!
